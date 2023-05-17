@@ -27,40 +27,42 @@ SET time_zone = "+00:00";
 -- Table structure for table `test_table`
 --
 
-CREATE TABLE `test_table` (
-  `id` int NOT NULL,
-  `name` varchar(512) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
 
---
--- Dumping data for table `test_table`
---
 
-INSERT INTO `test_table` (`id`, `name`) VALUES
-(1, 'Lisa'),
-(2, 'Kimia');
+INSERT INTO users (username, email, password) VALUES ('hammad', 'hammad@gmail.com', '123xyz');
+-- --
+-- -- Dumping data for table `test_table`
+-- --
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `test_table`
---
-ALTER TABLE `test_table`
-  ADD PRIMARY KEY (`id`);
 
---
--- AUTO_INCREMENT for dumped tables
---
+-- --
+-- -- Indexes for dumped tables
+-- --
 
---
--- AUTO_INCREMENT for table `test_table`
---
-ALTER TABLE `test_table`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-COMMIT;
+-- --
+-- -- Indexes for table `test_table`
+-- --
+-- ALTER TABLE `test_table`
+--   ADD PRIMARY KEY (`id`);
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- --
+-- -- AUTO_INCREMENT for dumped tables
+-- --
+
+-- --
+-- -- AUTO_INCREMENT for table `test_table`
+-- --
+-- ALTER TABLE `test_table`
+--   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+-- COMMIT;
+
+-- /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+-- /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+-- /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

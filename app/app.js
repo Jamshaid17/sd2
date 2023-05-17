@@ -22,10 +22,32 @@ app.get("/shop", function(req, res){
     res.render("shop");
 });
 
-app.get("/signup", function(req, res){
-    res.render("signup");
+
+app.get('/signup', (req, res) => {
+    res.render('signup', { title: 'Sign Up' });
 });
 
+// Handle the form submission
+app.post('/signup', async (req, res) => {
+    const { username, email, password } = req.body;
+
+    try {
+        // Establish a connection to your MySQL database
+        const connection = await db.getConnection();
+        
+        // Execute the query to insert the new user into the database
+        await connection.execute('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, password]);
+
+        // Close the database connection
+        connection.release();
+
+        // Redirect the user to the login page
+        res.redirect('/login');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error registering user');
+    }
+});
 
 app.get("/login", function(req, res){
     res.render("login");
