@@ -14,30 +14,16 @@ const config = {
     queueLimit: 0,
   },
 };
+  
+const pool = mysql.createPool(config.db);
 
-let pool;
-
-async function initializePool() {
-  pool = mysql.createPool(config.db);
-}
-
-async function closePool() {
-  if (pool) {
-    await pool.end();
-  }
-}
-
-async function executeQuery(sql, params) {
-  if (!pool) {
-    await initializePool();
-  }
-
+// Utility function to query the database
+async function query(sql, params) {
   const [rows, fields] = await pool.execute(sql, params);
 
   return rows;
 }
 
 module.exports = {
-  closePool,
-  executeQuery,
-};
+  query,
+}

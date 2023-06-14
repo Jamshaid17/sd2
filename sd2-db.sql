@@ -36,6 +36,30 @@ CREATE TABLE users (
 
 
 INSERT INTO users (username, email, password) VALUES ('hammad', 'hammad@gmail.com', '123xyz');
+
+
+CREATE TABLE users (
+  id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(30) NOT NULL,
+  password VARCHAR(30) NOT NULL
+);
+
+
+CREATE TABLE products (
+  id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  price DECIMAL(10, 2) NOT NULL,
+
+);
+
+INSERT INTO users (name, description, price) VALUES ('Jackets', 'Leather jacket for men', 99);
+INSERT INTO users (name, description, price) VALUES ('Ties', 'Ties for Men', 12);
+INSERT INTO users (name, description, price) VALUES ('Hoodie', 'Hoodies for female', 44);
+INSERT INTO users (name, description, price) VALUES ('Boots', 'Men Boots', 99);
+INSERT INTO users (name, description, price) VALUES ('Socks', 'Multi color Socks', 12);
+INSERT INTO users (name, description, price) VALUES ('Trainers', 'Trainers for work', 44);
+
 -- --
 -- -- Dumping data for table `test_table`
 -- --

@@ -1,8 +1,10 @@
 // Import express.js
 const express = require("express");
+const bodyParser = require("body-parser");
 
 // Create express app
 var app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('view engine', 'pug');
 app.set('views', './app/views');
@@ -30,28 +32,45 @@ app.get('/signup', (req, res) => {
 // Handle the form submission
 app.post('/signup', async (req, res) => {
     const { username, email, password } = req.body;
-
+  
     try {
-        // Establish a connection to your MySQL database
-        const connection = await db.getConnection();
-        
-        // Execute the query to insert the new user into the database
-        await connection.execute('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, password]);
-
-        // Close the database connection
-        connection.release();
-
-        // Redirect the user to the login page
-        res.redirect('/login');
+      // Execute the query to insert the new user into the database
+      await db.executeQuery('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, password]);
+  
+      // Redirect the user to the login page
+      res.redirect('/login');
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Error registering user');
+      console.error(error);
+      res.status(500).send('Error registering user');
     }
-});
+  });
+
 
 app.get("/login", function(req, res){
     res.render("login");
+    
 });
+app.post('/login', async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  try {
+    // Execute the query to fetch the password for the given username
+    const rows = await db.executeQuery('SELECT password FROM users WHERE username = ?', [username]);
+
+    if (rows.length === 0) {
+      res.send('Invalid username');
+    } else if (rows[0].password !== password) {
+      res.send('Invalid password');
+    } else {
+      res.send('Login successful');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error logging in');
+  }
+});
+  
 
 app.get("/cart", function(req, res){
     res.render("cart");
