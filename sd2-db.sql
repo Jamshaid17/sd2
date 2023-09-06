@@ -1,68 +1,49 @@
--- phpMyAdmin SQL Dump
--- version 5.1.1
--- https://www.phpmyadmin.net/
---
--- Host: db
--- Generation Time: Oct 30, 2022 at 09:54 AM
--- Server version: 8.0.24
--- PHP Version: 7.4.20
+-- Check if the database 'sd2' exists, and if not, create it
+CREATE DATABASE IF NOT EXISTS sd2;
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+-- Use the 'sd2' database
+USE sd2;
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `sd2-db`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `test_table`
---
-
-CREATE TABLE users (
+-- Create users table if it doesn't exist
+CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  username VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL,
+  username VARCHAR(50) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
+
+-- Create login table if it doesn't exist
+CREATE TABLE IF NOT EXISTS login (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(50) NOT NULL,
   password VARCHAR(255) NOT NULL
 );
 
 
-INSERT INTO users (username, email, password) VALUES ('hammad', 'hammad@gmail.com', '123xyz');
--- --
--- -- Dumping data for table `test_table`
--- --
+-- Create products table if it doesn't exist
+CREATE TABLE IF NOT EXISTS products (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  price DECIMAL(10, 2) NOT NULL,
+  description TEXT,
+  link TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
+-- Insert products if the table is empty
+INSERT INTO products (name, price, description, link)
+VALUES
+  ('Product 1', 49.99, 'Description for Product 1', '/img/11.jpg'),
+  ('Product 2', 29.99, 'Description for Product 2', '/img/12.jpg'),
+  ('Product 3', 19.99, 'Description for Product 3', '/img/13.jpg'),
+  ('Product 4', 59.99, 'Description for Product 4', '/img/14.jpg'),
+  ('Product 5', 39.99, 'Description for Product 5', '/img/15.jpg'),
+  ('Product 6', 69.99, 'Description for Product 6', '/img/16.jpg');
 
-
--- --
--- -- Indexes for dumped tables
--- --
-
--- --
--- -- Indexes for table `test_table`
--- --
--- ALTER TABLE `test_table`
---   ADD PRIMARY KEY (`id`);
-
--- --
--- -- AUTO_INCREMENT for dumped tables
--- --
-
--- --
--- -- AUTO_INCREMENT for table `test_table`
--- --
--- ALTER TABLE `test_table`
---   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
--- COMMIT;
-
--- /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
--- /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
--- /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- Create cart table if it doesn't exist
+CREATE TABLE IF NOT EXISTS cart (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  product_id INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (product_id) REFERENCES products(id)
+);

@@ -4,34 +4,19 @@ block content
   section.featured-products
     h2 Featured Products
     // Add your featured products here
+
   section.product-grid
-    section.product
-      section.img
-        img(src='/img/11.jpg')
-      section.product-name
-        h4.product-name Jackets
-      section.product-price  
-        p.product-price $99
-      section.button  
-        button.add-to-cart Add to Cart
-
-    section.product
-      section.img
-        img(src='/img/12.jpg')
-      section.product-name
-        h4.product-name Ties
-        p.product-price $12
-      section.button  
-        button.add-to-cart Add to Cart    
-
-    section.product
-      section.img
-        img(src='/img/13.jpg')
-      section.product-name
-        h4.product-name Hoodie
-        p.product-price $44
-      section.button  
-        button.add-to-cart Add to Cart   
+    each product in products
+      section.product
+        section.img
+          img(src=product.link)
+        section.product-name
+          h4.product-name= product.name
+        section.product-price  
+          p.product-price= `$${product.price}`
+        section.button  
+          form(action=`/add-to-cart/${product.id}`, method="POST")
+            button(type="submit") Add to Cart
 
   section.promotion
     h2 Special Offer
@@ -39,32 +24,15 @@ block content
 
   section.new-arrivals
     h2 New Arrivals
-    // Add your new arrivals here
     section.product-grid
-      section.product
-        section.img
-          img(src='/img/16.jpg')
-        section.product-name
-          h4.product-name Boots
-        section.product-price  
-          p.product-price $99
-        section.button  
-          button.add-to-cart Add to Cart
-
-      section.product
-        section.img
-          img(src='/img/15.jpg')
-        section.product-name
-          h4.product-name Socks
-          p.product-price $12
-        section.button  
-          button.add-to-cart Add to Cart    
-
-      section.product
-        section.img
-          img(src='/img/14.jpg')
-        section.product-name
-          h4.product-name Trainers
-          p.product-price $44
-        section.button  
-          button.add-to-cart Add to Cart
+      each product in products
+        section.product
+          section.img
+            img(src=product.link)
+          section.product-name
+            h4.product-name= product.name
+          section.product-price  
+            p.product-price= `$${product.price}`
+          section.button  
+            form(action=`/add-to-cart/${product.id}`, method="POST")
+              button(type="submit") Add to Cart
