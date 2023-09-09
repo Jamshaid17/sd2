@@ -34,12 +34,12 @@ block content
             img(src=product.link)
           section.product-name
             h4.product-name= product.name
-          section.product-price 
-            p.product-price= `$${product.price}` 
+          section.product-price  
+            p.product-price= `$${product.price`
 
             //add to cart button here
 
 
-          section.button   
-            form(action=`/add-to-cart/${product.id}`, method="POST") 
-              button(type="submit") Add to Cart 
+          section.button  
+            form(action=`/add-to-cart/${product.id}`, method="POST")
+              button(type="submit") Add to Cart
