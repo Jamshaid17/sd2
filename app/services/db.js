@@ -16,44 +16,23 @@ const config = {
   },
 };
 
-// Create the connection pool
-const pool = mysql.createPool(config.db);
+let pool;
 
-// Log a confirmation message
-pool.getConnection((err, connection) => {
-  if (err) {
-    console.error('Database connection error:', err);
-    return;
-  }
-  console.log('Database connected successfully!');
-  connection.release(); // Release the connection back to the pool
-});
+async function initializePool() {
+  pool = mysql.createPool(config.db);
+}
 
-// Read and split the SQL script into individual queries
-const sqlScript = fs.readFileSync(
-  path.join(__dirname, '../../sd2-db.sql'),
-  'utf8'
-);
-
-const queries = sqlScript
-  .split(';')
-  .map((query) => query.trim())
-  .filter((query) => query);
-
-// Execute each query in sequence
-async function runSqlScript() {
-  try {
-    for (const query of queries) {
-      await pool.query(query); // Changed `pool.execute` to `pool.query`
-      console.log('Query executed successfully:', query);
-    }
-  } catch (error) {
-    console.error('Error executing script:', error);
+async function closePool() {
+  if (pool) {
+    await pool.end();
   }
 }
 
-// Utility function to query the database
-async function query(sql, params) {
+async function executeQuery(sql, params) {
+  if (!pool) {
+    await initializePool();
+  }
+
   const [rows, fields] = await pool.execute(sql, params);
   return rows;
 }
@@ -61,5 +40,6 @@ async function query(sql, params) {
 runSqlScript();
 
 module.exports = {
-  query,
+  closePool,
+  executeQuery,
 };

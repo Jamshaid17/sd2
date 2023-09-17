@@ -1,6 +1,5 @@
 // Import express.js
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require("express");
 
 // Create express app
 var app = express();
@@ -33,80 +32,32 @@ app.get('/signup', (req, res) => {
 
 // Handle the form submission
 app.post('/signup', async (req, res) => {
-  const { username, email, password } = req.body;
+    const { username, email, password } = req.body;
 
-  try {
-    // Execute the query to insert the new user into the database
-    await db.query(
-      'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
-      [username, email, password]
-    );
+    try {
+        // Establish a connection to your MySQL database
+        const connection = await db.getConnection();
+        
+        // Execute the query to insert the new user into the database
+        await connection.execute('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, password]);
 
-    // Redirect the user to the login page
-    res.redirect('/login');
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error registering user');
-  }
-});
+        // Close the database connection
+        connection.release();
 
-// Handle the form submission for cart
-app.post('/add-to-cart/:productId', async (req, res) => {
-  const productId = req.params.productId;
-
-  try {
-    // Execute the query to insert the new user into the database
-    await db.query('INSERT INTO cart (product_id) VALUES (?)', [productId]);
-
-    // Redirect the user to the login page
-    res.redirect('/cart');
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error adding to cart');
-  }
-});
-
-app.get('/login', function (req, res) {
-  res.render('login');
-});
-app.post('/login', async (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-
-  try {
-    // Execute the query to fetch the password for the given username
-    const rows = await db.query(
-      'SELECT password FROM users WHERE username = ?',
-      [username]
-    );
-
-    if (rows.length === 0) {
-      res.send('Invalid username');
-    } else if (rows[0].password !== password) {
-      res.send('Invalid password');
-    } else {
-        console.log(db);
-  const products = await db.query('SELECT * FROM products; ');
-  res.render('userpage', { products });
+        // Redirect the user to the login page
+        res.redirect('/login');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error registering user');
     }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error logging in');
-  }
 });
 
-app.get('/cart', async function (req, res) {
-  const cart = await db.query(
-    'SELECT * FROM cart JOIN products on products.id=cart.product_id; '
-  );
-  res.render('cart', { cart });
+app.get("/login", function(req, res){
+    res.render("login");
 });
 
-app.get('/userpug', async function (req, res) {
-  const cart = await db.query(
-    'SELECT * FROM cart JOIN products on products.id=cart.product_id; '
-  );
-  res.render('index', { products });
+app.get("/cart", function(req, res){
+    res.render("cart");
 });
 
 // Create a route for testing the db
