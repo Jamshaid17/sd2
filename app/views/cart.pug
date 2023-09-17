@@ -1,9 +1,8 @@
 extends layout
-import react from 'react'
-const isEmpty = !cart.line_items?.length
+
 block content
   h2 Your Cart
-  if cart.line_items.length === 0
+  if cart.length === 0
     p Your cart is empty.
   else
     table
@@ -17,9 +16,9 @@ block content
         each item in cart
           tr
             td #{item.name}
-            td #{item.quantity}
+            td 1
             td $#{item.price}
-            td $#{item.quantity * item.price}
+            td $#{1 * item.price}
   .checkout
     form(action="/checkout" method="post")
       button(type="submit") Checkout
