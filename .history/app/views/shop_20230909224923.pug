@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  section.featured-products
+    h2 Pick Your Favourite
+    // Add your featured products here
+  section.product-grid
+    each product in products
+      section.product
+        section.img
+          img(src=product.link)
+        section.product-name
+          h4.product-name= product.name
+        section.product-price  
+          p.product-price= `$${product.price}`
+        section.button  
+          button.add-to-cart Add to Cart

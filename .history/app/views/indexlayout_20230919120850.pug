@@ -1,0 +1,67 @@
+html
+  head
+    title Click and Buy
+    link(rel='stylesheet', href='/css/style.css')
+  body
+    header 
+      h1 Click and Buy 
+    nav 
+      ul
+        li
+          a(href='/') Home 
+        li 
+          a(href='/shop') Shop 
+        li 
+          a(href='/cart') Cart 
+        li
+          a(href='/') SignOut
+    main 
+      block content 
+
+
+  section.featured-products
+    h2 Featured Products
+    // Add your featured products here
+    //products add here
+  section.product-grid
+    each product in products
+      section.product
+        section.img
+          img(src=product.link)
+        section.product-name
+          h4.product-name= product.name
+        section.product-description
+          h4.product-name= product.description
+        section.product-price  
+          p.product-price= `$${product.price}`
+
+          //submit button
+
+        section.button  
+          form(action=`/add-to-cart/${product.id}`, method="POST")
+            button(type="submit") Add to Cart
+
+  section.promotion
+    h2 Special Offer
+    p Get 10% off your first purchase with code NEW10!
+
+  section.new-arrivals
+    h2 New Arrivals
+    section.product-grid
+      each product in products
+        section.product
+          section.img
+            img(src=product.link)
+          section.product-name
+            h4.product-name= product.name
+          section.product-price 
+            p.product-price= `$${product.price}` 
+
+            //add to cart button here
+
+
+          section.button   
+            form(action=`/add-to-cart/${product.id}`, method="POST") 
+              button(type="submit") Add to Cart 
+    footer
+      p Copyright © Click and Buy 
