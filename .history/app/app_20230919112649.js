@@ -84,7 +84,6 @@ app.post('/login', async (req, res) => {
       res.send('Invalid username');
     } else if (rows[0].password !== password) {
       res.send('Invalid password');
-      //submit login
     } else {
       // console.log(db);
       // const products = await db.query('SELECT * FROM products; ');

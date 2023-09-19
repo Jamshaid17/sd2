@@ -1,6 +1,24 @@
-extends layout
+html
+  head
+    title Click and Buy
+    link(rel='stylesheet', href='/css/style.css')
+  body
+    header 
+      h1 Click and Buy 
+    nav 
+      ul
+        li
+          a(href='/') Home 
+        li 
+          a(href='/shop') Shop 
+        li 
+          a(href='/cart') Cart 
+        li
+          a(href='/') SignOut
+    main 
+      block content 
 
-block content
+
   section.featured-products
     h2 Featured Products
     // Add your featured products here
@@ -45,3 +63,5 @@ block content
           section.button   
             form(action=`/add-to-cart/${product.id}`, method="POST") 
               button(type="submit") Add to Cart 
+    footer
+      p Copyright © Click and Buy 
